@@ -2,47 +2,17 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 import { TodoEntity } from '../models/TodoEntity';
+import { todosSeed } from './TodosSeed';
 
-const todos: TodoEntity[] = [
-  {
-    id: '1',
-    name: 'Complete online JavaScript course',
-    completed: true,
-  },
-  {
-    id: '2',
-    name: 'Jog around the park 3x',
-    completed: false,
-  },
-  {
-    id: '3',
-    name: '10 minutes meditation',
-    completed: false,
-  },
-  {
-    id: '4',
-    name: 'Read for 1 hour',
-    completed: false,
-  },
-  {
-    id: '5',
-    name: 'Pick up groceries',
-    completed: false,
-  },
-  {
-    id: '6',
-    name: 'Complete Todo App on Frontend Mentor',
-    completed: false,
-  },
-];
-const ids = todos.map((todo) => todo.id);
-const entities = todos.reduce((acc, todo) => ({ ...acc, [todo.id]: todo }), {});
+const ids = todosSeed.map((todo) => todo.id);
+const entities = todosSeed.reduce((acc, todo) => ({ ...acc, [todo.id]: todo }), {});
 
 const todosAdapter = createEntityAdapter<TodoEntity>();
+const initialState = todosAdapter.getInitialState({ ids, entities });
 
 export const todoSlice = createSlice({
   name: 'todos',
-  initialState: todosAdapter.getInitialState({ ids, entities }),
+  initialState,
   reducers: {
     addTodo: {
       prepare: (name: string): PayloadAction<TodoEntity> => {
@@ -52,25 +22,34 @@ export const todoSlice = createSlice({
       },
       reducer: todosAdapter.addOne,
     },
-    markTodoAsComplete: (state, action: PayloadAction<TodoEntity>) => {
-      todosAdapter.updateOne(state, {
-        id: action.payload.id,
-        changes: { completed: !action.payload.completed },
-      });
+    markTodoAsComplete: (state, action: PayloadAction<string>) => {
+      const id = action.payload;
+      const todo = state.entities[id];
+      if (todo) {
+        todosAdapter.updateOne(state, { id, changes: { completed: !todo.completed } });
+      }
+    },
+    clearCompleted: (state) => {
+      const completedIds = Object.values(state.entities)
+        .filter((todo) => todo.completed)
+        .map((todo) => todo.id);
+
+      todosAdapter.removeMany(state, completedIds);
     },
   },
   selectors: {
-    selectAllTodos: (state) => {
-      return state.ids.map((id) => state.entities[id]);
-    },
+    selectAllTodos: todosAdapter.getSelectors().selectAll,
+    selectActiveTodosCount: (state) =>
+      Object.values(state.entities).filter((todo) => !todo.completed).length,
+    selectCompletedTodos: (state) => Object.values(state.entities).filter((todo) => todo.completed),
   },
 });
 
 /** Actions */
-export const { addTodo, markTodoAsComplete } = todoSlice.actions;
+export const { addTodo, markTodoAsComplete, clearCompleted } = todoSlice.actions;
 
 /** Selectors */
-export const { selectAllTodos } = todoSlice.selectors;
+export const { selectAllTodos, selectActiveTodosCount } = todoSlice.selectors;
 
 /** Reducer */
 export default todoSlice.reducer;

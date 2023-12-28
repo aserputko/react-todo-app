@@ -11,7 +11,7 @@ export const TodoListItem = ({ todo }: TodoListItemProps) => {
   const nameClassNames = todo.completed ? 'text-gray-300 line-through' : '';
 
   const handleCheckboxChange = () => {
-    dispatch(markTodoAsComplete(todo));
+    dispatch(markTodoAsComplete(todo.id));
   };
 
   return (
