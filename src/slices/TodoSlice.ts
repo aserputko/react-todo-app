@@ -89,7 +89,10 @@ export const todoSlice = createSlice({
         todosAdapter.updateOne(state, { id, changes: { completed: !todo.completed } });
       }
     },
-    clearCompleted: (state) => {
+    removeTodo: (state, action: PayloadAction<string>) => {
+      todosAdapter.removeOne(state, action.payload);
+    },
+    clearCompletedTodos: (state) => {
       const completedIds = selectCompletedTodoIds({ [todoSlice.name]: state });
       todosAdapter.removeMany(state, completedIds);
     },
@@ -100,4 +103,5 @@ export const todoSlice = createSlice({
 });
 
 /** Actions */
-export const { addTodo, markTodoAsCompleted, clearCompleted, filterTodosBy } = todoSlice.actions;
+export const { addTodo, markTodoAsCompleted, removeTodo, clearCompletedTodos, filterTodosBy } =
+  todoSlice.actions;

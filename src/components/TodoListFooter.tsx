@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { clearCompleted, selectActiveTodosCount } from '../slices/TodoSlice';
+import { clearCompletedTodos, selectActiveTodosCount } from '../slices/TodoSlice';
 import { TodoFilters } from './TodoFilters';
 
 export const TodoListFooter = () => {
@@ -7,7 +7,7 @@ export const TodoListFooter = () => {
   const activeTodosCount = useSelector(selectActiveTodosCount);
 
   const handleClearCompletedTodos = () => {
-    dispatch(clearCompleted());
+    dispatch(clearCompletedTodos());
   };
 
   return (
