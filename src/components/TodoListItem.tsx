@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { TodoEntity } from '../models/TodoEntity';
-import { markTodoAsComplete } from '../slices/TodoSlice';
+import { markTodoAsCompleted } from '../slices/TodoSlice';
 
 interface TodoListItemProps {
   todo: TodoEntity;
@@ -11,7 +11,7 @@ export const TodoListItem = ({ todo }: TodoListItemProps) => {
   const nameClassNames = todo.completed ? 'text-gray-300 line-through' : '';
 
   const handleCheckboxChange = () => {
-    dispatch(markTodoAsComplete(todo.id));
+    dispatch(markTodoAsCompleted(todo.id));
   };
 
   return (

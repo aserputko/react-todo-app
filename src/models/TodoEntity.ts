@@ -3,3 +3,9 @@ export interface TodoEntity {
   name: string;
   completed: boolean;
 }
+
+export enum TodoFilterBy {
+  All,
+  Active,
+  Completed,
+}
