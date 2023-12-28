@@ -52,6 +52,12 @@ export const todoSlice = createSlice({
       },
       reducer: todosAdapter.addOne,
     },
+    markTodoAsComplete: (state, action: PayloadAction<TodoEntity>) => {
+      todosAdapter.updateOne(state, {
+        id: action.payload.id,
+        changes: { completed: !action.payload.completed },
+      });
+    },
   },
   selectors: {
     selectAllTodos: (state) => {
@@ -61,7 +67,7 @@ export const todoSlice = createSlice({
 });
 
 /** Actions */
-export const { addTodo } = todoSlice.actions;
+export const { addTodo, markTodoAsComplete } = todoSlice.actions;
 
 /** Selectors */
 export const { selectAllTodos } = todoSlice.selectors;
