@@ -6,27 +6,27 @@ export const TodoAddItem = () => {
   const dispatch = useDispatch();
   const [todoName, setTodoName] = useState('');
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(addTodo(todoName));
     setTodoName('');
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoName(e.target.value);
   };
 
   return (
     <form
-      className='w-full flex flex-auto items-center bg-white border border-white rounded-md p-5 mb-6'
-      onSubmit={handleFormSubmit}
+      className='w-full flex flex-auto items-center bg-white border border-white dark:bg-slate-800 dark:border-slate-800 rounded-md p-5 mb-6'
+      onSubmit={handleSubmitForm}
     >
       <span>(-)</span>
       <input
-        className='flex flex-auto px-2'
+        className='flex flex-auto px-2 placeholder-gray-500 dark:placeholder-slate-500 bg-white dark:bg-slate-800 border border-white dark:border-slate-800'
         placeholder='Create a new todo...'
         value={todoName}
-        onChange={handleInputChange}
+        onChange={handleChangeInput}
       />
     </form>
   );

@@ -11,7 +11,7 @@ export const TodoListFooter = () => {
   };
 
   return (
-    <div className='flex flex-auto justify-between p-5 bg-white text-gray-500 text-sm'>
+    <div className='flex flex-auto justify-between p-5 bg-white text-gray-500 dark:bg-slate-800 dark:text-slate-500 text-sm'>
       <div>{activeTodosCount} item(s) left</div>
 
       <TodoFilters />

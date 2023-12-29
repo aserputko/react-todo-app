@@ -1,3 +1,57 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .icon {
+    display: block;
+    width: 18px;
+    height: 18px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom center, 50%, 50%;
+  }
+
+  .icon-sm {
+    width: 10px;
+    height: 10px;
+  }
+
+  .icon-lg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .icon-cross {
+    background-image: url('/images/icon-cross.svg');
+  }
+
+  .icon-check {
+    background-image: url('/images/icon-check.svg');
+  }
+
+  .icon-moon {
+    background-image: url('/images/icon-moon.svg');
+  }
+
+  .icon-sun {
+    background-image: url('/images/icon-sun.svg');
+  }
+
+  .hero-image {
+    height: 300px;
+    display: block;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom center, 50%, 50%;
+  }
+
+  .hero-image-light {
+    background-image: url('/images/bg-desktop-light.jpg');
+  }
+
+  .hero-image-dark {
+    background-image: url('/images/bg-desktop-dark.jpg');
+  }
+}
