@@ -1,10 +1,13 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+name: Deploy GH Pages 
 
 on:
   # Runs on pushes targeting the default branch
-  push:
-    branches: ['main']
+  workflow_run:
+    workflows: ["Unit tests"]
+    branches: [main]
+    types:
+      - completed
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
