@@ -1,7 +1,5 @@
 export const TodosTitle = () => {
   return (
-    <>
-      <h1 className='text-5xl text-white font-semibold tracking-[1em] uppercase my-12'>Todo</h1>
-    </>
+    <h1 className='my-10 text-[40px] font-semibold uppercase tracking-[15px] text-white'>Todo</h1>
   );
 };

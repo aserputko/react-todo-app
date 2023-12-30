@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { TodoEntity } from '../models/TodoEntity';
 import { markTodoAsCompleted, removeTodo } from '../slices/TodoSlice';
+import { Checkbox } from './Checkbox';
 
 interface TodoListItemProps {
   todo: TodoEntity;
@@ -19,17 +20,21 @@ export const TodoListItem = ({ todo }: TodoListItemProps) => {
   };
 
   return (
-    <div className='flex flex-auto items-center p-5 bg-white dark:bg-slate-800'>
-      <input
-        className='peer relative appearance-none w-6 h-6 border rounded-full border-gray-200 checked:border-0 checked:bg-gradient-to-br from-[#55DDFF] to-[#C058F3] cursor-pointer'
-        type='checkbox'
-        checked={todo.completed}
-        onChange={() => handleMarkTodoAsCompleted()}
-      />
-      <i className='absolute icon icon-sm icon-check hidden peer-checked:block pointer-events-none ml-2'></i>
+    <div className='card group flex-auto items-center'>
+      <Checkbox checked={todo.completed} handleChange={handleMarkTodoAsCompleted} />
 
-      <span className={`flex flex-auto px-2 ${nameClassNames}`}>{todo.name}</span>
-      <button type='button' onClick={() => handleRemoveTodo()}>
+      <span
+        className={`flex flex-auto cursor-pointer px-2 ${nameClassNames}`}
+        onClick={handleMarkTodoAsCompleted}
+      >
+        {todo.name}
+      </span>
+
+      <button
+        className='group-hover:flex sm:hidden'
+        type='button'
+        onClick={() => handleRemoveTodo()}
+      >
         <i className='icon icon-cross'></i>
       </button>
     </div>

@@ -8,12 +8,12 @@ export const TodoList = () => {
   const todos = useSelector(selectFilteredTodos);
 
   return (
-    <div className='flex flex-col w-full bg-white border border-white dark:bg-slate-800 dark:border-slate-800 py-1 rounded-md'>
+    <div className='flex w-full flex-col rounded-md border border-white bg-white py-1 shadow-xl dark:border-slate-800 dark:bg-slate-800'>
       {todos.map((todo: TodoEntity) => {
         return (
           <>
             <TodoListItem key={todo.id} todo={todo} />
-            <hr className='border-gray-200 dark:slate-700' />
+            <hr className='border-gray-200 dark:border-slate-700' />
           </>
         );
       })}

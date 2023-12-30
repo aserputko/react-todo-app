@@ -11,12 +11,18 @@ export const TodoListFooter = () => {
   };
 
   return (
-    <div className='flex flex-auto justify-between p-5 bg-white text-gray-500 dark:bg-slate-800 dark:text-slate-500 text-sm'>
+    <div className='flex flex-auto justify-between bg-white px-5 py-4 text-sm text-gray-500 sm:py-5 dark:bg-slate-800 dark:text-slate-500'>
       <div>{activeTodosCount} item(s) left</div>
 
-      <TodoFilters />
+      <div className='hidden flex-auto sm:flex'>
+        <TodoFilters />
+      </div>
 
-      <button type='button' onClick={() => handleClearCompletedTodos()}>
+      <button
+        className='hover:text-dark dark:hover:text-white'
+        type='button'
+        onClick={() => handleClearCompletedTodos()}
+      >
         Clear Completed
       </button>
     </div>

@@ -1,24 +1,17 @@
-import { useSelector } from 'react-redux';
 import { ThemeSwitcher } from '../components/ThemeSwitcher';
 import { TodoAddItem } from '../components/TodoAddItem';
+import { TodoFilters } from '../components/TodoFilters';
 import { TodoList } from '../components/TodoList';
 import { TodosTitle } from '../components/TodoTitle';
-import { isDarkTheme } from '../models/ThemeEntity';
-import { selectCurrentTheme } from '../slices/ThemeSlice';
 
 export const TodosPages = () => {
-  const currentTheme = useSelector(selectCurrentTheme);
-
-  const heroImageClassName = isDarkTheme(currentTheme)
-    ? 'hero-image hero-image-dark'
-    : 'hero-image hero-image-light';
   return (
     <>
-      <div className={`w-full absolute left-0 top-0 right-0 ${heroImageClassName}`}></div>
+      <div className='hero-image'></div>
 
-      <div className='flex flex-col justify-center items-center p-5 z-10'>
-        <div className='flex flex-col w-full max-w-[540px]'>
-          <div className='flex justify-between items-center'>
+      <div className='z-10 flex flex-col items-center justify-center px-6 py-2 sm:py-7'>
+        <div className='flex w-full min-w-[327px] max-w-[540px] flex-col'>
+          <div className='flex items-center justify-between'>
             <TodosTitle />
             <ThemeSwitcher />
           </div>
@@ -26,6 +19,10 @@ export const TodosPages = () => {
           <TodoAddItem />
 
           <TodoList />
+
+          <div className='card mt-4 flex-auto justify-between text-sm text-gray-500 shadow sm:hidden dark:text-slate-500'>
+            <TodoFilters />
+          </div>
 
           {/* TODO: (TD-12) Drag & Drop */}
         </div>

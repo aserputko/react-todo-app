@@ -2,41 +2,52 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TodoFilterBy } from '../models/TodoEntity';
 import { filterTodosBy, selectTodosFilterBy } from '../slices/TodoSlice';
 
+interface FilterOption {
+  name: string;
+  filterBy: TodoFilterBy;
+  isActive: boolean;
+}
+
 export const TodoFilters = () => {
   const dispatch = useDispatch();
   const todosFilterBy = useSelector(selectTodosFilterBy);
-
-  const isAllTodosActivated = todosFilterBy === TodoFilterBy.All;
-  const isActiveTodosActivated = todosFilterBy === TodoFilterBy.Active;
-  const isCompletedTodosActivated = todosFilterBy === TodoFilterBy.Completed;
 
   const handleFilterTodos = (filterBy: TodoFilterBy) => {
     dispatch(filterTodosBy(filterBy));
   };
 
-  return (
-    <div className='flex flex-auto justify-center'>
+  const todoFilterOptions: FilterOption[] = [
+    {
+      name: 'All',
+      filterBy: TodoFilterBy.All,
+      isActive: todosFilterBy === TodoFilterBy.All,
+    },
+    {
+      name: 'Active',
+      filterBy: TodoFilterBy.Active,
+      isActive: todosFilterBy === TodoFilterBy.Active,
+    },
+    {
+      name: 'Completed',
+      filterBy: TodoFilterBy.Completed,
+      isActive: todosFilterBy === TodoFilterBy.Completed,
+    },
+  ];
+
+  const todoFilterButtons = todoFilterOptions.map((option: FilterOption, index: number) => {
+    return (
       <button
-        className={`font-semibold mx-2 ${isAllTodosActivated && 'text-blue'}`}
+        key={index}
+        className={`mx-2 font-semibold hover:text-dark dark:hover:text-white ${
+          option.isActive && 'text-blue'
+        }`}
         type='button'
-        onClick={() => handleFilterTodos(TodoFilterBy.All)}
+        onClick={() => handleFilterTodos(option.filterBy)}
       >
-        All
+        {option.name}
       </button>
-      <button
-        className={`font-semibold mx-2 ${isActiveTodosActivated && 'text-blue'}`}
-        type='button'
-        onClick={() => handleFilterTodos(TodoFilterBy.Active)}
-      >
-        Active
-      </button>
-      <button
-        className={`font-semibold mx-2 ${isCompletedTodosActivated && 'text-blue'}`}
-        type='button'
-        onClick={() => handleFilterTodos(TodoFilterBy.Completed)}
-      >
-        Completed
-      </button>
-    </div>
-  );
+    );
+  });
+
+  return <div className='flex flex-auto justify-center'>{todoFilterButtons}</div>;
 };

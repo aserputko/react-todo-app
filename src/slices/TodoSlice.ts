@@ -75,16 +75,16 @@ export const todoSlice = createSlice({
   initialState,
   reducers: {
     addTodo: {
-      prepare: (name: string): PayloadAction<TodoEntity> => {
+      prepare: (action: Omit<TodoEntity, 'id'>): PayloadAction<TodoEntity> => {
         const id = nanoid();
-        const todo: TodoEntity = { id, name, completed: false };
+        const todo: TodoEntity = { id, name: action.name, completed: action.completed };
         return { type: todoSlice.actions.addTodo.type, payload: todo };
       },
       reducer: todosAdapter.addOne,
     },
     markTodoAsCompleted: (state, action: PayloadAction<string>) => {
       const id = action.payload;
-      const todo = selectTodoById({ todos: state }, action.payload);
+      const todo = state.entities[action.payload];
       if (todo) {
         todosAdapter.updateOne(state, { id, changes: { completed: !todo.completed } });
       }
@@ -93,7 +93,10 @@ export const todoSlice = createSlice({
       todosAdapter.removeOne(state, action.payload);
     },
     clearCompletedTodos: (state) => {
-      const completedIds = selectCompletedTodoIds({ [todoSlice.name]: state });
+      const completedIds = Object.values(state.entities)
+        .filter((todo) => todo.completed)
+        .map((todo) => todo.id);
+
       todosAdapter.removeMany(state, completedIds);
     },
     filterTodosBy: (state, action: PayloadAction<TodoFilterBy>) => {
