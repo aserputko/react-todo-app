@@ -7,7 +7,7 @@ interface ThemeState {
 }
 
 const initialState: ThemeState = {
-  name: ThemeName.Light,
+  name: ThemeName.Dark,
 };
 
 /** Selectors */
