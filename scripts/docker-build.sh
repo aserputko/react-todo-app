@@ -13,4 +13,4 @@ USERNAME="aserputko"
 REPO="todo-list-webap"
 
 # Build the Docker image with two tags: one for the version and one for "latest".
-docker build -t ${USERNAME}/${REPO}:${VERSION} -t ${USERNAME}/${REPO}:latest .
+docker build --platform linux/amd64,linux/arm64 -t ${USERNAME}/${REPO}:${VERSION} -t ${USERNAME}/${REPO}:latest .
